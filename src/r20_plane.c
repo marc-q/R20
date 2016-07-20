@@ -29,7 +29,6 @@ char obj_model_check_shadow (obj_model *models, unsigned int models_amnt, vector
 			    opos->y >= models[i].planes[j].pos.y && opos->y <= models[i].planes[j].pos.y+models[i].planes[j].height)
 			{
 				return 1;
-				break;
 			}
 		}
 	}
