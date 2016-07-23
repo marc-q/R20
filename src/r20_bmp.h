@@ -3,6 +3,8 @@
 
 #define BMP_MAGIC 19778
 
+#define BMP_GET_PADDING(a) ((a)%4)
+
 struct _bmp_header
 {
 	unsigned int bfSize;
