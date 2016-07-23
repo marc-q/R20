@@ -5,7 +5,7 @@
 
 void bmp_header_init_df (bmp_header *header, int width, int height)
 {
-	header->bfSize = sizeof (bmp_pixel) * (width * height);
+	header->bfSize = (sizeof (bmp_pixel) * (width * height)) + BMP_GET_PADDING (width);
 	header->bfReserved = 0;
 	header->bfOffBits = 54;
 	header->biSize = 40;
@@ -32,10 +32,12 @@ short bmp_write_img (char *filename, bmp_pixel **pxls, int width, int height)
 {
 	unsigned int x, y;
 	unsigned short magic;
+	unsigned char padding;
 	FILE *img_file;
 	bmp_header header;
 	
 	magic = BMP_MAGIC;
+	padding = '\0';
 	img_file = fopen (filename, "wb");
 	
 	if (img_file == NULL)
@@ -53,6 +55,11 @@ short bmp_write_img (char *filename, bmp_pixel **pxls, int width, int height)
 		for (x = 0; x < width; x++)
 		{
 			fwrite (&pxls[y][x], sizeof (bmp_pixel), 1, img_file);
+		}
+		
+		for (x = 0; x < BMP_GET_PADDING (width); x++)
+		{
+			fwrite (&padding, sizeof (padding), 1, img_file);
 		}
 	}
 	
