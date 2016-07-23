@@ -1,6 +1,7 @@
 /* Copyright 2016 Marc Volker Dickmann */
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <time.h>
 #include "src/r20_math.h"
 #include "src/r20_bmp.h"
