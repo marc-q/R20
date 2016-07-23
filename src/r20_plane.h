@@ -38,7 +38,7 @@ typedef struct _obj_model obj_model;
 
 void obj_texturedata_init (obj_texturedata*, bmp_pixel*, int, int, int, char);
 
-char obj_model_check_shadow (obj_model*, unsigned int, vectorf*);
+bool obj_model_check_shadow (obj_model*, unsigned int, vectorf*);
 
 void obj_plane_init (obj_plane*, shader_material*, int, int, char, float, float, float);
 void obj_plane_render (obj_plane*, obj_model*, unsigned int, obj_light*, unsigned int, bmp_pixel**, int, int, vectorf*, char texture_gen (obj_texturedata*));
