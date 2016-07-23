@@ -1,5 +1,6 @@
 /* Copyright 2016 Marc Volker Dickmann */
 #include <stdio.h>
+#include <stdbool.h>
 #include "r20_math.h"
 #include "r20_bmp.h"
 #include "r20_shader.h"
@@ -14,7 +15,7 @@ void obj_texturedata_init (obj_texturedata *td, bmp_pixel *pxl, int x, int y, in
 	td->type = type;
 }
 
-char obj_model_check_shadow (obj_model *models, unsigned int models_amnt, vectorf *opos)
+bool obj_model_check_shadow (obj_model *models, unsigned int models_amnt, vectorf *opos)
 {
 	unsigned int i, j;
 	
@@ -28,12 +29,12 @@ char obj_model_check_shadow (obj_model *models, unsigned int models_amnt, vector
 			    opos->x >= models[i].planes[j].pos.x && opos->x <= models[i].planes[j].pos.x+models[i].planes[j].width &&
 			    opos->y >= models[i].planes[j].pos.y && opos->y <= models[i].planes[j].pos.y+models[i].planes[j].height)
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
 	
-	return 0;
+	return false;
 }
 
 void obj_plane_init (obj_plane *p, shader_material *mat, int width, int height, char rotation, float x, float y, float z)
@@ -83,7 +84,7 @@ void obj_plane_render (obj_plane *p, obj_model *models, unsigned int models_amnt
 			{
 				obj_texturedata_init (&td, &pxls[(int)pos.y][(int)pos.x], (int)t.x, (int)t.y, (int)t.z, 0);
 				
-				if (texture_gen (&td) == 0 && obj_model_check_shadow (models, models_amnt, &t) == 0)
+				if (texture_gen (&td) == 0 && obj_model_check_shadow (models, models_amnt, &t) == false)
 				{
 					vectorf_init (&t, td.x, td.y, td.z);
 					obj_lights_render (lights, lights_amnt, p->mat, cam, &t, &pxls[(int)pos.y][(int)pos.x]);
