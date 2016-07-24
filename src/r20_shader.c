@@ -13,20 +13,20 @@ void shader_color_init (shader_color *scolor, float red, float green, float blue
 	scolor->blue = blue;
 }
 
-void shader_material_init (shader_material *mat, float kambient, float kdiffus, float kspecular)
+void shader_material_init (shader_material *mat, float kambient, float kdiffus, float kspecular, float n)
 {
 	mat->kambient = kambient;
 	mat->kdiffus = kdiffus;
 	mat->kspecular = kspecular;
+	mat->n = n;
 }
 
 /* Shader - Phong */
 double shader_phong (obj_light *light, shader_material *mat, vectorf *cam, vectorf *pos)
 {
-	double iambient, idiffus, ispecular, n;
+	double iambient, idiffus, ispecular;
 	vectorf nv, lv, hv;
 	
-	n = 1.0;
 	vectorf_init (&nv, 0.0, 0.0, 1.0);
 	vectorf_init (&hv, 0.0, 0.0, 0.0);
 	
@@ -40,7 +40,7 @@ double shader_phong (obj_light *light, shader_material *mat, vectorf *cam, vecto
 	idiffus = light->intensity * mat->kdiffus * vectorf_scalar (&lv, &nv);
 	
 	/* Specular */
-	ispecular = light->intensity * mat->kspecular * ((n + 2.0) / (2.0 * M_PI)) * powf (vectorf_scalar (&hv, &nv), n);
+	ispecular = light->intensity * mat->kspecular * ((mat->n + 2.0) / (2.0 * M_PI)) * powf (vectorf_scalar (&hv, &nv), mat->n);
 	
 	return iambient + idiffus + ispecular;
 }

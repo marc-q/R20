@@ -15,6 +15,7 @@ struct _shader_material
 	float kambient;
 	float kdiffus;
 	float kspecular;
+	float n;
 };
 
 typedef struct _shader_material shader_material;
@@ -30,7 +31,7 @@ struct _obj_light
 typedef struct _obj_light obj_light;
 
 void shader_color_init (shader_color*, float, float, float);
-void shader_material_init (shader_material*, float, float, float);
+void shader_material_init (shader_material*, float, float, float, float);
 
 double shader_phong (obj_light*, shader_material*, vectorf*, vectorf*);
 
