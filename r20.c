@@ -407,8 +407,8 @@ static void r20_tst_space (int width, int height)
 	obj_light_init (&lights[3], 1.0, 0.0, 0.4, 0.7, 1.0, 1024.0, 512.0, 51.0);
 	
 	/* Materials */
-	shader_material_init (&mats[0], 0.5, 0.20, 0.50);
-	shader_material_init (&mats[1], 0.5, 0.70, 0.10);
+	shader_material_init (&mats[0], 0.5, 0.20, 0.50, 1.0);
+	shader_material_init (&mats[1], 0.5, 0.70, 0.10, 1.0);
 	
 	/* Base */
 	r20_model_plane_init (&models[0], &mats[0], 462, height, 0.0, 0.0, 1.0, ROT_NONE);
