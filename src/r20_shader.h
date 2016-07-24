@@ -15,6 +15,7 @@ struct _shader_material
 	float kambient;
 	float kdiffus;
 	float kspecular;
+	float n;
 };
 
 typedef struct _shader_material shader_material;
