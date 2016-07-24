@@ -83,10 +83,10 @@ vectorf vectorf_to_twod (vectorf cam, vectorf pos, int width, int height)
 	r.y = r.y * 1.0;
 	r.z = r.z * n.z;
 	
-	d = (double)r.z / d;
+	d = 1.0 - r.z / d;
 	
-	r.x = r.x / ((double)1.0 - d);
-	r.y = r.y / ((double)1.0 - d);
+	r.x = r.x / d;
+	r.y = r.y / d;
 	r.z = pos.z;
 	
 	return r;
