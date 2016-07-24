@@ -59,15 +59,13 @@ void obj_plane_render (obj_plane *p, obj_model *models, unsigned int models_amnt
 		{
 			switch (p->rotation)
 			{
-				case ROT_NONE:
-					vectorf_init (&t, x, y, p->pos.z);
-					break;
 				case ROT_A:
 					vectorf_init (&t, y, p->pos.z, x);
 					break;
 				case ROT_B:
 					vectorf_init (&t, p->pos.z, y, x);
 					break;
+				case ROT_NONE:
 				default:
 					vectorf_init (&t, x, y, p->pos.z);
 					break;
