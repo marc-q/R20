@@ -72,7 +72,7 @@ void obj_plane_render (obj_plane *p, obj_model *models, unsigned int models_amnt
 					break;
 			}
 			
-			obj_texturedata_init (&td, &pxls[py][px], (int)t.x, (int)t.y, (int)t.z, 1);
+			obj_texturedata_init (&td, &pxls[0][0], (int)t.x, (int)t.y, (int)t.z, 1);
 			texture_gen (&td);
 			
 			vectorf_init (&t, td.x, td.y, td.z);
@@ -81,7 +81,7 @@ void obj_plane_render (obj_plane *p, obj_model *models, unsigned int models_amnt
 			px = (int)pos.x;
 			py = (int)pos.y;
 			
-			if (pos.x >= 0 && pos.x < width && pos.y >= 0 && pos.y < height)
+			if (px >= 0 && px < width && py >= 0 && py < height)
 			{
 				obj_texturedata_init (&td, &pxls[py][px], (int)t.x, (int)t.y, (int)t.z, 0);
 				
