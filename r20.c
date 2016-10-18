@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
+#include "lib/libbmp.h"
 #include "src/r20_math.h"
-#include "src/r20_bmp.h"
 #include "src/r20_shader.h"
 #include "src/r20_plane.h"
 
@@ -362,7 +362,7 @@ static void r20_tst_space (int width, int height)
 {
 	unsigned int x, y;
 	char color;
-	bmp_pixel **pxls;
+	bmp_img img;
 	vectorf cam;
 	shader_material mats[MATS_AMNT];
 	obj_light *lights;
@@ -370,14 +370,12 @@ static void r20_tst_space (int width, int height)
 	
 	srand (time (NULL));
 	
-	pxls = (bmp_pixel**) malloc (sizeof (bmp_pixel*) * height);
+	bmp_img_init_df (&img, width, -height);
 	
 	color = 0;
 	
 	for (y = 0; y < height; y++)
 	{
-		pxls[y] = (bmp_pixel*) malloc (sizeof (bmp_pixel) * width);
-		
 		for (x = 0; x < width; x++)
 		{
 			if (((x*x)+(y*y))%(800*800) == 0)
@@ -387,11 +385,11 @@ static void r20_tst_space (int width, int height)
 			
 			if (rand () % 256 == 0)
 			{
-				bmp_pixel_init (&pxls[y][x], 128, 100, 16);
+				bmp_pixel_init (&img.img_pixels[y][x], 128, 100, 16);
 			}
 			else
 			{
-				bmp_pixel_init (&pxls[y][x], 10+color, 10+color, 30+color);
+				bmp_pixel_init (&img.img_pixels[y][x], 10+color, 10+color, 30+color);
 			}
 		}
 	}
@@ -431,21 +429,21 @@ static void r20_tst_space (int width, int height)
 	/* Rendering */
 	
 	/* TODO: Maybe make it possible to render this using the loop! */
-	r20_model_plane_render (&models[0], models, MODELS_AMNT, lights, LIGHTS_AMNT, pxls, width, height, &cam, texture_gen_rndsand);
-	r20_model_plane_render (&models[1], models, MODELS_AMNT, lights, LIGHTS_AMNT, pxls, width, height, &cam, texture_gen_rndgrass);
+	r20_model_plane_render (&models[0], models, MODELS_AMNT, lights, LIGHTS_AMNT, img.img_pixels, width, height, &cam, texture_gen_rndsand);
+	r20_model_plane_render (&models[1], models, MODELS_AMNT, lights, LIGHTS_AMNT, img.img_pixels, width, height, &cam, texture_gen_rndgrass);
 	
 	for (x = 2; x < MODELS_AMNT; x++)
 	{
 		switch (models[x].id)
 		{
 			case MODEL_CUBE:
-				r20_model_cube_render (&models[x], models, MODELS_AMNT, lights, LIGHTS_AMNT, pxls, width, height, &cam);
+				r20_model_cube_render (&models[x], models, MODELS_AMNT, lights, LIGHTS_AMNT, img.img_pixels, width, height, &cam);
 				break;
 			case MODEL_PATH:
-				r20_model_path_render (&models[x], models, MODELS_AMNT, lights, LIGHTS_AMNT, pxls, width, height, &cam);
+				r20_model_path_render (&models[x], models, MODELS_AMNT, lights, LIGHTS_AMNT, img.img_pixels, width, height, &cam);
 				break;
 			case MODEL_FENCE:
-				r20_model_fence_render (&models[x], models, MODELS_AMNT, lights, LIGHTS_AMNT, pxls, width, height, &cam);
+				r20_model_fence_render (&models[x], models, MODELS_AMNT, lights, LIGHTS_AMNT, img.img_pixels, width, height, &cam);
 				break;
 			default:
 				printf ("ERROR: Model unknown (%i)!\n", models[x].id);
@@ -454,18 +452,12 @@ static void r20_tst_space (int width, int height)
 	}
 	
 	/* Write the image file */
-	bmp_write_img ("test.bmp", pxls, width, height);
+	bmp_img_write (&img, "test.bmp");
+	bmp_img_free (&img);
 
 	/* Cleaning */
 	r20_models_free (models, MODELS_AMNT);
 	free (lights);
-	
-	for (y = 0; y < height; y++)
-	{
-		free (pxls[y]);
-	}
-	
-	free (pxls);
 }
 
 int main (int argc, char *argv[])
