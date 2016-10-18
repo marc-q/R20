@@ -1,5 +1,5 @@
 CC = gcc
-OBJECTS = src/r20_math.c src/r20_bmp.c src/r20_shader.c src/r20_plane.c r20.c
+OBJECTS = lib/libbmp.c src/r20_math.c src/r20_shader.c src/r20_plane.c r20.c
 LIBS = -lm
 CFLAGS = -Wall -O2
 BINDIR = $(DESTDIR)/usr/bin
