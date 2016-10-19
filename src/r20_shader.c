@@ -1,8 +1,8 @@
 /* Copyright 2016 Marc Volker Dickmann */
 #include <stdio.h>
 #include <math.h>
+#include "../lib/libbmp.h"
 #include "r20_math.h"
-#include "r20_bmp.h"
 #include "r20_shader.h"
 
 /* Light */
