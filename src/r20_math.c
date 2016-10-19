@@ -70,7 +70,7 @@ vectorf vectorf_to_twod (vectorf cam, vectorf pos, int width, int height)
 	
 	cam.z = (width * 1.58);
 	
-	vectorf_init (&pos, pos.x, height - pos.z, pos.y);
+	vectorf_init (&pos, pos.x, height - pos.z + (pos.y * 0.25), pos.y);
 	vectorf_init (&h, cam.x, cam.y, -1);
 	
 	n = vectorf_sub (&h, &cam);
