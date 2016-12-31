@@ -1,4 +1,4 @@
-/* Copyright 2016 Marc Volker Dickmann */
+/* Copyright 2016 - 2017 Marc Volker Dickmann */
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -462,7 +462,7 @@ static void r20_tst_space (int width, int height)
 
 int main (int argc, char *argv[])
 {
-	printf ("R20 v. 0.0.1 A (c) 2016 Marc Volker Dickmann\n");
+	printf ("R20 v. 0.0.1 A (c) 2016 - 2017 Marc Volker Dickmann\n");
 	
 	r20_tst_space (2048, 2048);
 	
